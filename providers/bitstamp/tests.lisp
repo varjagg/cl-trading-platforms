@@ -1,13 +1,13 @@
 ;;;; tests.lisp
 
-(defpackage #:cl-trading-platform-bitstamp-tests
-  (:use #:cl #:cl-trading-platform.bitstamp)
+(defpackage #:cl-trading-platforms-bitstamp-tests
+  (:use #:cl #:cl-trading-platforms.bitstamp)
   (:import-from #:rove
                 #:deftest
                 #:testing
                 #:ok))
 
-(in-package #:cl-trading-platform-bitstamp-tests)
+(in-package #:cl-trading-platforms-bitstamp-tests)
 
 (deftest symbol-and-formatting
   (testing "market symbol normalization"
@@ -25,7 +25,7 @@
                                 :api-secret "secret"))
            (body "offset=1")
            (url "https://www.bitstamp.net/api/v2/user_transactions/")
-           (headers (cl-trading-platform.bitstamp::authentication-headers
+           (headers (cl-trading-platforms.bitstamp::authentication-headers
                      client :post url body)))
       (ok (string= (cdr (assoc "X-Auth" headers :test #'string=))
                    "BITSTAMP key"))
@@ -38,7 +38,7 @@
   (testing "empty private body omits content type"
     (let* ((client (make-client :api-key "key"
                                 :api-secret "secret"))
-           (headers (cl-trading-platform.bitstamp::authentication-headers
+           (headers (cl-trading-platforms.bitstamp::authentication-headers
                      client
                      :post
                      "https://www.bitstamp.net/api/v2/balance/"

@@ -1,6 +1,6 @@
 ;;;; client.lisp
 
-(in-package #:cl-trading-platform.bitstamp)
+(in-package #:cl-trading-platforms.bitstamp)
 
 (alexandria:define-constant +bitstamp-base-url+
     "https://www.bitstamp.net"
@@ -61,7 +61,7 @@
    (user-agent
     :accessor user-agent
     :initarg :user-agent
-    :initform "cl-trading-platform-bitstamp/0.1"))
+    :initform "cl-trading-platforms-bitstamp/0.1"))
   (:default-initargs :rate 1/3))
 
 (defvar *nonce-counter* 0)
@@ -432,7 +432,7 @@
 (defun sell-btc-limit (client amount price &key limit)
   (sell-limit client "btcusd" amount price :limit-price limit))
 
-;;; cl-trading-platform protocol implementation
+;;; cl-trading-platforms protocol implementation
 
 (defmethod platform-status ((client client))
   (ticker client (default-market client)))

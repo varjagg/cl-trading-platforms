@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:cl-trading-platform
+(defpackage #:cl-trading-platforms
   (:use #:cl)
   (:export
    ;; Base class and rate limiting

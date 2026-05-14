@@ -1,9 +1,9 @@
 ;;;; package.lisp
 
-(defpackage #:cl-trading-platform.ibkr
+(defpackage #:cl-trading-platforms.ibkr
   (:use #:cl)
   (:nicknames #:ctp-ibkr)
-  (:import-from #:cl-trading-platform
+  (:import-from #:cl-trading-platforms
                 #:platform
                 #:rate
                 #:rate-limiter

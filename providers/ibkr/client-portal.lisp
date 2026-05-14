@@ -1,6 +1,6 @@
 ;;;; client-portal.lisp
 
-(in-package #:cl-trading-platform.ibkr)
+(in-package #:cl-trading-platforms.ibkr)
 
 (alexandria:define-constant +client-portal-base-url+
     "https://localhost:5000/v1/api"
@@ -37,7 +37,7 @@
    (user-agent
     :accessor user-agent
     :initarg :user-agent
-    :initform "cl-trading-platform-ibkr/0.1"))
+    :initform "cl-trading-platforms-ibkr/0.1"))
   (:default-initargs :rate 1/5))
 
 (defun make-client-portal (&rest initargs)
@@ -406,7 +406,7 @@
 (defun sell-market (client conid quantity &rest keys)
   (apply #'place-market-order client conid "SELL" quantity keys))
 
-;;; cl-trading-platform protocol implementation
+;;; cl-trading-platforms protocol implementation
 
 (defmethod platform-status ((client client-portal))
   (auth-status client))

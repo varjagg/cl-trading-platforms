@@ -1,6 +1,6 @@
 ;;;; protocol.lisp
 
-(in-package #:cl-trading-platform)
+(in-package #:cl-trading-platforms)
 
 (defgeneric platform-status (platform)
   (:documentation "Return a provider-specific health/session status payload."))

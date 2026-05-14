@@ -1,13 +1,13 @@
 ;;;; tests.lisp
 
-(defpackage #:cl-trading-platform-tests
-  (:use #:cl #:cl-trading-platform)
+(defpackage #:cl-trading-platforms-tests
+  (:use #:cl #:cl-trading-platforms)
   (:import-from #:rove
                 #:deftest
                 #:testing
                 #:ok))
 
-(in-package #:cl-trading-platform-tests)
+(in-package #:cl-trading-platforms-tests)
 
 (defclass test-platform (platform)
   ((slept

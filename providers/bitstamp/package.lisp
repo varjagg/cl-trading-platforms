@@ -1,9 +1,9 @@
 ;;;; package.lisp
 
-(defpackage #:cl-trading-platform.bitstamp
+(defpackage #:cl-trading-platforms.bitstamp
   (:use #:cl)
   (:nicknames #:ctp-bitstamp)
-  (:import-from #:cl-trading-platform
+  (:import-from #:cl-trading-platforms
                 #:platform
                 #:rate
                 #:rate-limiter

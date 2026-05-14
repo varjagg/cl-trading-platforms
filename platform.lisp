@@ -1,6 +1,6 @@
 ;;;; platform.lisp
 
-(in-package #:cl-trading-platform)
+(in-package #:cl-trading-platforms)
 
 (defclass platform ()
   ((rate
