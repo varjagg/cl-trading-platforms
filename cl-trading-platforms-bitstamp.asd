@@ -3,7 +3,7 @@
 (asdf:defsystem #:cl-trading-platforms-bitstamp
   :description "Bitstamp implementation for cl-trading-platforms."
   :author "Eugene Zaikonnikov"
-  :license "Proprietary, all rights reserved"
+  :license "LGPL-3.0-or-later"
   :version "0.1.0"
   :serial t
   :depends-on (#:cl-trading-platforms
@@ -22,7 +22,7 @@
 (asdf:defsystem #:cl-trading-platforms-bitstamp/test
   :description "Tests for cl-trading-platforms-bitstamp"
   :author "Eugene Zaikonnikov"
-  :license "Proprietary, all rights reserved"
+  :license "LGPL-3.0-or-later"
   :depends-on (#:cl-trading-platforms-bitstamp #:rove)
   :serial t
   :components ((:file "providers/bitstamp/tests"))

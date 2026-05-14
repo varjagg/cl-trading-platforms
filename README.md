@@ -42,4 +42,4 @@ Provider systems:
 
 ## License
 
-Proprietary, all rights reserved.
+LGPL-3.0-or-later.

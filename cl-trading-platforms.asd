@@ -3,7 +3,7 @@
 (asdf:defsystem #:cl-trading-platforms
   :description "Shared Common Lisp trading platform protocol and rate-limited base class."
   :author "Eugene Zaikonnikov"
-  :license "Proprietary, all rights reserved"
+  :license "LGPL-3.0-or-later"
   :version "0.1.0"
   :serial t
   :depends-on (#:cl-rate-limiter
@@ -16,7 +16,7 @@
 (asdf:defsystem #:cl-trading-platforms/test
   :description "Tests for cl-trading-platforms"
   :author "Eugene Zaikonnikov"
-  :license "Proprietary, all rights reserved"
+  :license "LGPL-3.0-or-later"
   :depends-on (#:cl-trading-platforms #:rove)
   :serial t
   :components ((:file "tests"))
