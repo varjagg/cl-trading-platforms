@@ -18,6 +18,11 @@ Provider systems own concrete HTTP APIs and implement the protocol generics.
 Baryga still owns application-level risk policy, strategy runtime,
 broker-order journals, and fill reconciliation.
 
+The shared `platform-time` generic is the platform clock. Live providers may
+use process monotonic time; simulated providers should return data time. The
+Bitstamp simulated platform returns the current CSV row's Unix timestamp so
+simulation consumers can stamp events with historical time.
+
 ```lisp
 (ql:quickload :cl-trading-platforms)
 
@@ -38,6 +43,28 @@ Provider systems:
 
 (defparameter *bitstamp*
   (ctp-bitstamp:make-client))
+```
+
+Bitstamp also has an offline simulated platform for recorded
+CryptoDataDownload CSV files such as
+`/Users/eugene/datasets/cryptocurrencies/Bitstamp_BTCUSD_d.csv`:
+
+```lisp
+(defparameter *sim*
+  (ctp-bitstamp:make-simulated-platform
+   :trades-path #P"/Users/eugene/datasets/cryptocurrencies/Bitstamp_BTCUSD_d.csv"))
+
+(ctp-bitstamp:platform-status *sim*)     ; ticker-shaped payload at cursor
+(ctp-bitstamp:platform-time *sim*)       ; current CSV Unix timestamp
+(ctp-bitstamp:history-bars *sim* "btcusd")
+(ctp-bitstamp:advance-simulation *sim*)
+```
+
+The expected CSV shape is:
+
+```text
+https://www.CryptoDataDownload.com
+unix,date,symbol,open,high,low,close,Volume BTC,Volume USD
 ```
 
 ## License

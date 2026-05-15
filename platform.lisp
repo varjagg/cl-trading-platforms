@@ -27,7 +27,7 @@
     :initform 30)))
 
 (defgeneric platform-time (platform)
-  (:documentation "Return a monotonically increasing timestamp in seconds."))
+  (:documentation "Return the platform clock in seconds. Live platforms may use process monotonic time; simulated platforms should return data time."))
 
 (defgeneric platform-sleep (platform duration)
   (:documentation "Sleep for DURATION seconds in PLATFORM's execution context."))

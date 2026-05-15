@@ -15,7 +15,8 @@
                #:quri
                #:yason)
   :components ((:file "providers/bitstamp/package")
-               (:file "providers/bitstamp/client"))
+               (:file "providers/bitstamp/client")
+               (:file "providers/bitstamp/simulated"))
   :in-order-to ((asdf:test-op
                  (asdf:test-op #:cl-trading-platforms-bitstamp/test))))
 

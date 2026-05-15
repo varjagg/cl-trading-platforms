@@ -307,17 +307,25 @@
 
 ;;; Public endpoints
 
-(defun ticker (client market)
+(defgeneric ticker (client market))
+
+(defmethod ticker ((client client) market)
   (request-json client :get (market-endpoint "ticker" market)))
 
-(defun hourly-ticker (client market)
+(defgeneric hourly-ticker (client market))
+
+(defmethod hourly-ticker ((client client) market)
   (request-json client :get (market-endpoint "ticker_hour" market)))
 
-(defun order-book (client market &key group)
+(defgeneric order-book (client market &key group))
+
+(defmethod order-book ((client client) market &key group)
   (request-json client :get (market-endpoint "order_book" market)
                 :params `(("group" . ,group))))
 
-(defun transactions (client market &key (time "hour"))
+(defgeneric transactions (client market &key time))
+
+(defmethod transactions ((client client) market &key (time "hour"))
   (request-json client :get (market-endpoint "transactions" market)
                 :params `(("time" . ,time))))
 

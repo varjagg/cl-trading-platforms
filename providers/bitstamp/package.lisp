@@ -27,6 +27,7 @@
                 #:order-status
                 #:trades
                 #:market-snapshot
+                #:history-bars
                 #:preview-platform-order
                 #:submit-platform-order)
   (:export
@@ -51,6 +52,8 @@
    ;; Client
    #:client
    #:make-client
+   #:simulated-platform
+   #:make-simulated-platform
    #:base-url
    #:api-key
    #:api-secret
@@ -61,6 +64,13 @@
    #:default-market
    #:request-json
    #:read-credentials
+   #:trades-path
+   #:recorded-trades
+   #:simulation-cursor
+   #:current-simulation-record
+   #:advance-simulation
+   #:reset-simulation
+   #:read-recorded-trades-csv
 
    ;; Protocol
    #:platform-status
@@ -72,6 +82,7 @@
    #:order-status
    #:trades
    #:market-snapshot
+   #:history-bars
    #:preview-platform-order
    #:submit-platform-order
 
