@@ -52,7 +52,9 @@ CryptoDataDownload CSV files such as
 ```lisp
 (defparameter *sim*
   (ctp-bitstamp:make-simulated-platform
-   :trades-path #P"/Users/eugene/datasets/cryptocurrencies/Bitstamp_BTCUSD_d.csv"))
+   :trades-path #P"/Users/eugene/datasets/cryptocurrencies/Bitstamp_BTCUSD_d.csv"
+   :balances '(("USD" . 10000d0)
+               ("BTC" . 0d0))))
 
 (ctp-bitstamp:platform-status *sim*)     ; ticker-shaped payload at cursor
 (ctp-bitstamp:platform-time *sim*)       ; current CSV Unix timestamp
@@ -60,11 +62,24 @@ CryptoDataDownload CSV files such as
 (ctp-bitstamp:advance-simulation *sim*)
 ```
 
+Submitting an order to the simulated Bitstamp platform records an immediate
+fill when the order crosses the current CSV row close, updates simple base and
+quote balances, and exposes fills through the shared `trades` protocol.
+Balances must be seeded; orders that would create a negative balance are
+rejected unless `:allow-negative-balances t` is set explicitly.
+
 The expected CSV shape is:
 
 ```text
 https://www.CryptoDataDownload.com
 unix,date,symbol,open,high,low,close,Volume BTC,Volume USD
+```
+
+Simpler minute-bar files are also accepted when the simulated platform has a
+default market such as `btcusd`; quote volume is derived from `close * volume`:
+
+```text
+timestamp,open,high,low,close,volume
 ```
 
 ## License

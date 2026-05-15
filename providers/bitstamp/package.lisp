@@ -67,6 +67,12 @@
    #:trades-path
    #:recorded-trades
    #:simulation-cursor
+   #:simulated-orders
+   #:simulated-trades
+   #:simulated-balances
+   #:simulated-order-counter
+   #:simulated-trade-counter
+   #:allow-negative-balances-p
    #:current-simulation-record
    #:advance-simulation
    #:reset-simulation
