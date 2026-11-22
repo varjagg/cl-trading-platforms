@@ -58,6 +58,12 @@
    #:user-agent
    #:request-json
 
+   ;; Offline stock bar replay
+   #:simulated-stock-platform
+   #:make-simulated-stock-platform
+   #:advance-stock-replay
+   #:simulation-cash
+
    ;; Protocol
    #:platform-status
    #:keepalive
@@ -89,6 +95,8 @@
 
    ;; Contracts and market data
    #:search-contracts
+   #:stock-contracts
+   #:contract-details
    #:contract-info
    #:market-data-snapshot
    #:market-data-history
@@ -99,6 +107,7 @@
    #:preview-orders
    #:modify-order
    #:cancel-order
+   #:cancel-account-order
    #:confirm-reply
    #:get-live-orders
    #:get-order-status

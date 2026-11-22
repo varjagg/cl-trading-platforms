@@ -116,12 +116,13 @@
             '(("Content-Type" . "application/json")))
           headers))
 
-(defun request-json (client method endpoint &key params content headers)
+(defun request-json (client method endpoint &key params content headers before-send)
   (let* ((body (when content (json-string content)))
          (url (endpoint-url client endpoint params)))
     (handler-case
         (multiple-value-bind (response status response-headers final-url)
             (with-rate-limit (client)
+              (when before-send (funcall before-send))
               (dexador:request url
                                :method method
                                :headers (request-headers client body headers)
@@ -197,11 +198,24 @@
                 (format nil "/portfolio/~A/ledger"
                         (path-segment (resolved-account-id client account-id)))))
 
-(defun search-contracts (client symbol &key name (security-type "STK"))
+(defgeneric contract-search (client symbol name security-type))
+
+(defmethod contract-search ((client client-portal) symbol name security-type)
   (request-json client :get "/iserver/secdef/search"
                 :params `(("symbol" . ,symbol)
                           ("name" . ,(when name (bool-string name)))
                           ("secType" . ,security-type))))
+
+(defun search-contracts (client symbol &key name (security-type "STK"))
+  (contract-search client symbol name security-type))
+
+(defgeneric stock-contracts (client symbol))
+(defmethod stock-contracts ((client client-portal) symbol)
+  (request-json client :get "/trsrv/stocks" :params `(("symbols" . ,symbol))))
+
+(defgeneric contract-details (client conid))
+(defmethod contract-details ((client client-portal) conid)
+  (request-json client :get (format nil "/iserver/contract/~A/info" (path-segment conid))))
 
 (defun contract-info (client conid &key (security-type "STK") month strike right exchange)
   (request-json client :get "/iserver/secdef/info"
@@ -315,11 +329,11 @@
 (defun orders-content (orders)
   `(("orders" . ,(order-vector orders))))
 
-(defun place-orders (client orders &key account-id)
+(defun place-orders (client orders &key account-id before-send)
   (request-json client :post
                 (format nil "/iserver/account/~A/orders"
                         (path-segment (resolved-account-id client account-id)))
-                :content (orders-content orders)))
+                :content (orders-content orders) :before-send before-send))
 
 (defun preview-orders (client orders &key account-id)
   (request-json client :post
@@ -334,11 +348,17 @@
                         (path-segment order-id))
                 :content order))
 
-(defun cancel-order (client order-id &key account-id)
+(defgeneric cancel-account-order (client order-id account-id)
+  (:documentation "Provider specialization point for CANCEL-ORDER. ACCOUNT-ID can be NIL for the selected account."))
+
+(defmethod cancel-account-order ((client client-portal) order-id account-id)
   (request-json client :delete
                 (format nil "/iserver/account/~A/order/~A"
                         (path-segment (resolved-account-id client account-id))
                         (path-segment order-id))))
+
+(defun cancel-order (client order-id &key account-id)
+  (cancel-account-order client order-id account-id))
 
 (defun confirm-reply (client reply-id &key (confirmed t))
   (request-json client :post
@@ -457,6 +477,6 @@
   (preview-orders client request :account-id account-id))
 
 (defmethod submit-platform-order ((client client-portal) request
-                                  &key live account-id &allow-other-keys)
+                                  &key live account-id before-send &allow-other-keys)
   (declare (ignore live))
-  (place-orders client request :account-id account-id))
+  (place-orders client request :account-id account-id :before-send before-send))

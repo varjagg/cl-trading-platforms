@@ -12,4 +12,5 @@
                #:quri
                #:yason)
   :components ((:file "providers/ibkr/package")
-               (:file "providers/ibkr/client-portal")))
+               (:file "providers/ibkr/client-portal")
+               (:file "providers/ibkr/simulated-stock")))
